@@ -3,22 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedPrep Prototype</title>
+  <title>MedPrep Prototype (Debug Mode)</title>
   
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
   
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
+    #debug-screen { display: none; padding: 20px; color: #721c24; background-color: #f8d7da; border-bottom: 2px solid #f5c6cb; }
+  </style>
+  
+  <script>
+    window.addEventListener('error', function(event) {
+      document.getElementById('debug-screen').style.display = 'block';
+      document.getElementById('error-msg').innerText = event.message + ' (Line ' + event.lineno + ')';
+    });
+  </script>
 </head>
 <body>
-  <div id="root"></div>
+  
+  <div id="debug-screen">
+    <h3>🚨 Fatal Crash Detected</h3>
+    <p id="error-msg" style="font-family: monospace; font-weight: bold;"></p>
+  </div>
+  
+  <div id="root">
+    <div style="padding: 20px;">
+      ⏳ Loading MedPrep... 
+      <br><br>
+      <i>(If this message stays on the screen for more than 3 seconds, press <b>F12</b> to open your Developer Console and look for red text.)</i>
+    </div>
+  </div>
 
-  <script type="text/babel">
+  <script type="text/babel" data-presets="react,env">
     const { useState, useEffect } = React;
 
     function MedPrep() {
-      // Safely initialize localStorage to prevent fatal crashes in strict browsers
       const [apiKey, setApiKey] = useState(() => {
         try {
           return localStorage.getItem("MEDPREP_GEMINI_KEY") || "";
@@ -31,7 +52,6 @@
       const [loading, setLoading] = useState(false);
       const [error, setError] = useState(null);
 
-      // Safely set localStorage
       useEffect(() => {
         try {
           localStorage.setItem("MEDPREP_GEMINI_KEY", apiKey);
@@ -59,7 +79,6 @@
             
             const data = await response.json();
             
-            // Catch API-level errors (like an invalid key)
             if (!response.ok) {
                 throw new Error(data.error?.message || "API Request Failed");
             }
@@ -73,20 +92,21 @@
       };
 
       return (
-        <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
+        <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto", backgroundColor: "white", borderRadius: "8px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
           <h2>MedPrep</h2>
           <input 
             type="password" 
             placeholder="Paste Gemini API Key" 
             value={apiKey} 
             onChange={(e) => setApiKey(e.target.value)}
-            style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+            style={{ width: "100%", padding: "10px", marginBottom: "10px", boxSizing: "border-box" }}
           />
           <textarea 
             rows="4" 
+            placeholder="Enter patient transcript here..."
             value={query} 
             onChange={(e) => setQuery(e.target.value)} 
-            style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+            style={{ width: "100%", padding: "10px", marginBottom: "10px", boxSizing: "border-box" }}
           />
           <button 
             onClick={analyzeQuery} 
@@ -98,11 +118,12 @@
               backgroundColor: loading ? "#ccc" : "#007BFF",
               color: "white",
               border: "none",
-              borderRadius: "4px"
+              borderRadius: "4px",
+              fontWeight: "bold"
             }}>
             {loading ? "Processing..." : "Analyze"}
           </button>
-          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+          {error && <p style={{ color: "red", marginTop: "15px", fontWeight: "bold" }}>{error}</p>}
         </div>
       );
     }

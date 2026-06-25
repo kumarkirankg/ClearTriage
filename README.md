@@ -1,38 +1,90 @@
-# MedPrep 💊 | Medication Intelligence Layer
+# MedPrep — Medication Intelligence Layer
 
-> 👉 **[Live Interactive Demo: Try MedPrep Here](https://kumarkirankg.github.io/medprep/)**
->
-> 🛠️ Note for Reviewers: To protect private developer limits, this prototype securely reads your own Gemini API Key via your browser's local storage. You can grab a completely free, instant sandbox key from Google AI Studio to interact with the live AI pipeline.
+**A concept prototype built for EMMA, an NHS GP surgery AI receptionist by QuantumLoopAI.**
 
-## Overview
-EMMA handles every inbound patient call as an AI receptionist—but medication queries require clinical intelligence before they reach a GP or pharmacist. 
+→ **[Live Demo](https://kumarkiran.kg.github.io/medprep)** ← *(replace with your actual link)*
 
-**MedPrep** is a conceptual medication intelligence layer that sits between EMMA's call transcript and the clinical handoff. It safely triages urgency, generates a structured clinical note, and scripts EMMA's verbal response back to the patient. 
+---
 
-*Crucially, no clinical advice is given to the patient—MedPrep strictly handles structured pre-processing and safe routing.*
+## What is this?
 
-## The Interface
-![MedPrep Prototype Demo](Capturec1.PNG)
+GP surgeries receive hundreds of inbound patient calls every day. A large portion are medication queries — missed doses, side effects, running out of prescriptions, dosing questions for children.
 
-## Key Features
+EMMA handles the call. But medication queries need clinical intelligence before they reach a GP or pharmacist.
 
-* **Intelligent Triage:** Automatically classifies patient transcripts into `Urgent`, `Routine`, or `Self-care` priority levels based on clinical context.
-* **Structured Clinical Summaries:** Converts conversational, unstructured patient anxiety into concise, professional notes optimized for a GP or Pharmacist to read quickly.
-* **Automated Flagging:** Extracts 3-4 key clinical flags (e.g., "Possible ACE inhibitor adverse effect" or "Abrupt medication cessation risk").
-* **Safe Patient Scripting:** Generates warm, clear, and non-diagnostic scripts for the EMMA voice agent to read back to the patient, managing expectations on wait times and next steps.
+**MedPrep sits in between.**
 
-## Technical Architecture
+It takes EMMA's call transcript, analyses it using Claude (Anthropic's AI), and returns:
 
-This prototype was built to demonstrate complex LLM reasoning within a lightweight, serverless frontend environment.
+- A **triage priority** — Urgent, Routine, or Self-care
+- A **structured clinical note** ready for the GP or pharmacist
+- A **scripted response** for EMMA to read back to the patient
+- A **next action** with a realistic timeframe
+- **Key clinical flags** to surface immediately
 
-* **Frontend:** React 18 (Single-file CDN deployment for instant execution)
-* **AI Engine:** Google Gemini 1.5 Pro API (`gemini-1.5-pro`)
-* **Prompt Engineering:** Strict JSON-schema enforcement via `responseMimeType: "application/json"` and specialized system instructions to guarantee deterministic, parseable outputs without markdown hallucination.
-* **Styling:** Custom CSS variables with Tabler Icons.
-* **Deployment:** GitHub Pages
+No clinical advice is given to the patient. MedPrep is purely a pre-processing and triage layer.
 
-## How to Run Locally
-Because this project uses a single-file architecture to eliminate build-step friction, running it locally is instantaneous:
-1. Clone the repository.
-2. Open `index.html` directly in any modern web browser.
-3. *Note: An active Google Gemini API key is required in the source code to process live queries.*
+---
+
+## Demo
+
+Try it live — no login, no install needed.
+
+Three sample queries are pre-loaded (ACE inhibitor cough, missed BP medication, child's fever) or type any medication query directly into the box.
+
+---
+
+## How it works
+
+```
+Patient call
+     ↓
+EMMA transcribes the query
+     ↓
+MedPrep analyses it via Claude API
+     ↓
+Returns structured triage JSON
+     ↓
+EMMA reads scripted response to patient
+Clinical note routed to GP / pharmacist
+```
+
+The frontend is a single HTML file hosted on GitHub Pages. API calls are proxied through a Cloudflare Worker so the key is never exposed in the browser or source code.
+
+---
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React (via CDN), plain HTML/CSS |
+| AI model | Claude Sonnet (Anthropic API) |
+| API proxy | Cloudflare Workers (free tier) |
+| Hosting | GitHub Pages (free) |
+
+---
+
+## Triage outputs
+
+| Priority | When it applies |
+|---|---|
+| 🔴 Urgent | Potential adverse drug reaction, abrupt cessation risk, symptoms requiring same-day review |
+| 🔵 Routine | Queries needing a clinician but not time-critical |
+| 🟢 Self-care | Minor queries that can be resolved with pharmacy advice or patient information |
+
+---
+
+## Limitations & disclaimers
+
+- This is a **concept prototype only** — not validated for clinical use
+- MedPrep does not give clinical advice to patients
+- All triage outputs should be reviewed by a qualified clinician before action
+- Built to demonstrate an integration concept between an AI receptionist and a clinical pre-processing layer
+
+---
+
+## About
+
+Built as a concept integration for **EMMA by QuantumLoopAI** — an AI receptionist designed for NHS GP surgeries.
+
+Powered by the **Claude API** by Anthropic.

@@ -25,7 +25,7 @@ It takes the patient call transcript, analyses it, and returns:
 
 ## 🟢 Live Demo
 
-**[cleartriage — kumarkirankg.github.io/cleartriage](https://kumarkirankg.github.io/cleartriage)**
+**[ClearTriage — kumarkirankg.github.io/ClearTriage](https://kumarkirankg.github.io/ClearTriage)**
 
 Five built-in scenarios:
 - ACE inhibitor cough

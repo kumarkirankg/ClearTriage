@@ -23,9 +23,9 @@ It takes the patient call transcript, analyses it, and returns:
 
 ---
 
-## 🟢 Live Demo
+## Live Demo
 
-**[ClearTriage — kumarkirankg.github.io/ClearTriage](https://kumarkirankg.github.io/ClearTriage)**
+**[→ Try ClearTriage](https://kumarkirankg.github.io/ClearTriage/)**
 
 Five built-in scenarios:
 - ACE inhibitor cough
@@ -36,7 +36,7 @@ Five built-in scenarios:
 
 ---
 
-## ⚙️ How It Works
+## ⚙ How It Works
 
 ```
 Patient call transcript
@@ -69,7 +69,7 @@ ClearTriage is designed to complement **any AI receptionist system** handling hi
 
 ---
 
-## 🛡️ Clinical Safety
+## 🛡 Clinical Safety
 
 - ✅ No clinical advice is given to the patient at any point
 - ✅ ClearTriage is a pre-processing layer only — all clinical decisions remain with the clinical team
@@ -78,7 +78,7 @@ ClearTriage is designed to complement **any AI receptionist system** handling hi
 
 ---
 
-## 🛠️ Built With
+## 🛠 Built With
 
 - **Claude** — AI analysis and clinical output development
 - **HTML / JavaScript** — frontend interface
@@ -86,9 +86,9 @@ ClearTriage is designed to complement **any AI receptionist system** handling hi
 
 ---
 
-## 👤 About
+## About
 
-Built by **[Kiran Kumar] https://www.linkedin.com/in/kiran-kumar-96b224393/** as a concept prototype exploring how AI pre-processing can reduce clinical staff workload in high volume patient call environments.
+Built by **[Kiran Kumar](https://www.linkedin.com/in/kiran-kumar-96b224393/)** as a concept prototype exploring how AI pre-processing can reduce clinical staff workload in high volume patient call environments.
 
 ---
 

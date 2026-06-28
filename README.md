@@ -20,7 +20,7 @@ No clinical advice is given to the patient. ClearTriage is purely a pre-processi
 
 LIVE DEMO
 
-[your GitHub Pages link]
+https://kumarkirankg.github.io/ClearTriage/ 
 
 Five built-in scenarios:
 - ACE inhibitor cough
